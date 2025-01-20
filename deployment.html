@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAE - Déploiement du Site Web</title>
+  <title>Déploiement du Site Web</title>
   <!-- CSS Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -14,13 +13,50 @@
       background-color: #6c757d;
       color: white;
     }
+    .content-block {
+      background-color: #e9ecef;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .content-block:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    h2, h3 {
+      color: #343a40;
+      font-weight: bold;
+    }
+    p {
+      font-size: 1.1rem;
+    }
+    .header-image {
+      width: 100%;
+      height: 300px;
+      background: url('Images_compte_rendu_systeme/logotrain.png') no-repeat center center/cover;
+    }
+    .carousel-inner img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 400px;
+      margin: auto;
+    }
+    .carousel-control-prev:hover .carousel-control-prev-icon,
+    .carousel-control-next:hover .carousel-control-next-icon {
+      background-color: #343a40 !important;
+      border-radius: 50%;
+    }
   </style>
 </head>
-<body>
+<!-- Image de fond -->
+<div class="header-image"></div>
+
 <!-- Barre de navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">SAE Rapport</a>
+    <a class="navbar-brand" href="#">Déploiement</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -29,12 +65,20 @@
         <li class="nav-item">
           <a class="nav-link" href="index.html">Accueil</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="installation.html">Installation & Déploiement</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" id="deploymentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Déploiement
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="deploymentDropdown">
+            <li><a class="dropdown-item" href="#reseau">Configuration Réseau</a></li>
+            <li><a class="dropdown-item" href="#ssh">Installation et Configuration SSH</a></li>
+            <li><a class="dropdown-item" href="#apache">Installation d'Apache2</a></li>
+            <li><a class="dropdown-item" href="#rep">Configuration d'Apache2</a></li>
+            <li><a class="dropdown-item" href="#web">Association avec WebStorm</a></li>
+          </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="deployment.html">Déploiement du Site Web</a>
-        </li>
+          <a class="nav-link" href="installation.html">Installation & Configuration </a>
         <li class="nav-item">
           <a class="nav-link" href="diagram.html">Diagramme de Gantt</a>
         </li>
@@ -48,38 +92,201 @@
 
 <!-- Contenu principal -->
 <div class="container mt-5">
-  <section id="deployment">
-    <h2 class="text-center">Déploiement du Site Web</h2>
-    <p>Pour déployer le site web, voici les étapes que nous avons suivies :</p>
-    <ol>
-      <li>Installation d'Apache pour créer un serveur web :</li>
-      <pre><code>sudo apt install apache2</code></pre>
-
-      <li>Configuration du répertoire racine :</li>
-      <pre><code>/var/www/html</code></pre>
-      <p>Les fichiers HTML et CSS ont été placés dans ce répertoire.</p>
-
-      <li>Modification des permissions pour permettre l'accès :</li>
-      <pre><code>sudo chmod -R 755 /var/www/html</code></pre>
-
-      <li>Redémarrage d'Apache pour appliquer les modifications :</li>
-      <pre><code>sudo systemctl restart apache2</code></pre>
-
-      <li>Test du site :</li>
-      <p>Le site est accessible depuis un navigateur via l'adresse IP de la machine virtuelle.</p>
-      <pre><code>http://[IP-de-la-VM]</code></pre>
-    </ol>
-
-    <h3>Résultats</h3>
-    <p>Une fois les étapes terminées, le site s'affiche correctement et permet de naviguer entre les pages HTML/CSS créées.</p>
+  <section id="reseau" class="content-block">
+    <h2>1. Configuration Réseau en Mode Pont</h2>
+    <div id="carouselReseau" class="carousel slide mb-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/ponts.png" class="d-block" alt="Mode NAT">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Configuration initiale en mode ponts</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/addresseip.png" class="d-block" alt="Mode Pont">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Adresse ip Obtenue</h5>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselReseau" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselReseau" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <p>Initialement, notre machine virtuelle était configurée en mode NAT (Network Address Translation). Ce mode empêche d'accéder directement à notre machine virtuelle via une adresse IP locale. Nous avons donc basculé en mode pont pour attribuer à la machine une adresse IP accessible sur le réseau local. Cette étape permet à tout appareil connecté au même réseau de visualiser le site web. Pour connaître l’adresse IP de notre machine virtuelle, nous avons effectué la commande ci-dessous: </p>
+    <pre><code>ip -c addr</code></pre>
   </section>
+
+  <section id="ssh" class="content-block">
+    <h2>2. Installation et Configuration du Service SSH</h2>
+    <div id="carouselSSH" class="carousel slide mb-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/sudo_apt_1.png" class="d-block" alt="Installation SSH">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Installation du service SSH</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/ssh_windows.png" class="d-block" alt="Test de connexion SSH">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Test de la connexion SSH sur Windows</h5>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselSSH" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselSSH" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <p>Pour faciliter les manipulations, nous avons installé le service SSH avec :</p>
+    <pre><code>sudo apt install openssh-server</code></pre>
+    <p>Le service SSH nous permet de gérer la machine virtuelle depuis le terminal de notre machine hôte sous Windows, ce qui facilite le copier-coller des commandes complexes. Pour tester la connexion SSH, nous avons exécuté cette commande depuis Windows :</p>
+    <pre><code>ssh sirine@192.168.1.97</code></pre>
+    <p>La connexion est réussie, nous obtenons un accès direct à la machine virtuelle via le terminal. </p>
+  </section>
+
+  <section id="apache" class="content-block">
+    <h2>3. Installation d’Apache2 pour le Serveur Web</h2>
+    <div id="carouselApache" class="carousel slide mb-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/sudo_apt_apache.png" class="d-block" alt="Installation Apache">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Installation d'Apache2</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/sudo_apt_install_opensssh_server%20_affichage_UBUNTU.png" class="d-block" alt="Test du serveur">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Test de la page par défaut</h5>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouseApache" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselApache" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <p>Nous avons installé Apache2, un logiciel serveur web, avec la commande suivante :</p>
+    <pre><code>sudo apt install apache2</code></pre>
+    <p>Une fois installé, nous avons testé son fonctionnement en tapant l’adresse IP de la machine dans un navigateur. Si tout fonctionne, une page par défaut d’Apache s’affiche.</p>
+
+  </section>
+
+  <section id="rep" class="content-block">
+    <h2>5. Configuration d’Apache2 et Gestion des Permissions</h2>
+    <div id="carouselrep" class="carousel slide mb-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/ls_siteSAE.png" class="d-block" alt="Installation Apache">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Répertoire du Site</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/deloc_fichier_apache.png" class="d-block" alt="Test du serveur">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Modification fichier de Configuration</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/Changer%20directory%20(etap%201%20final).png" class="d-block" alt="Test du serveur">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Modification fichier de Configuration -2-</h5>
+          </div>
+        </div>
+      </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/erreures%20multiples%201%20et%202%20(etape%2022%20final).png" class="d-block" alt="Test du serveur">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Quelques erreurs </h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/DONNER%20DROITS%20(etap%202%20final).png" class="d-block" alt="Test du serveur">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Changement pour les droits nécéssaires </h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/etap%203%20final.png" class="d-block" alt="Test du serveur">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Vérification des droits</h5>
+          </div>
+        </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouserep" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselrep" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <p>Pour organiser notre projet, nous avons d'abord créé un répertoire dédié à notre site,Le répertoire siteSAE a été conçu pour contenir tous les fichiers du site web. Cependant, pour qu’Apache utilise ce répertoire comme dossier racine, il faut modifier certaines configurations.</p>
+<p>Nous avons modifié le fichier de configuration d’Apache,en utilisant l’éditeur nano (plus intuitif que vi, car il est plus simple à manipuler), nous avons remplacé le chemin par défaut (/var/www/html) par celui de notre répertoire : </p>
+
+    <pre><code>DocumentRoot /home/sirine/siteSAE</code></pre>
+    <p>Cependant, cela a entraîné des erreurs de permissions, car Apache2 ne pouvait pas accéder au répertoire personnel de l’utilisateur. Pour corriger cela, nous avons utilisé la commande chmod comme indiqué au-dessus pour accorder les droits nécessaires</p>
+
+    <p>Nous avons également mis à jour le fichier de configuration global d’Apache :</p>
+    <pre><code>/etc/apache2/apache2.conf</code></pre>
+<p>L'ajout de directives spécifiques dans le fichier de configuration d'Apache est essentiel pour permettre au serveur d'accéder et de gérer correctement le répertoire contenant notre site web. Dans le Directory, cela spécifie le chemin du répertoire que l'ont veut configurer (répertoire de notre site web).</p>
+<p>Enfin, Une fois les modifications dans les fichiers de configuration effectuées, On décide de redémarrer le service Apache pour que les changements soient pris en compte.</p>
+  </section>
+
+
+  <section id="web" class="content-block">
+    <h2>6. Association avec WebStorm</h2>
+    <div id="carouselweb" class="carousel slide mb-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="Images_compte_rendu_systeme/Déployement%20Site%20Web/etap%206%20final.png" class="d-block" alt="Installation Apache">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Synchronisation avec Webstorm</h5>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouseweb" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselweb" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <p>Pour synchroniser les fichiers entre WebStorm et la machine virtuelle, nous avons configuré un protocole SFTP :</p>
+<li>
+  <ol>Accès via Tools > Deployment > Configuration</ol>
+  <ol>Création d’une configuration avec l’adresse IP et le nom d’utilisateur</ol>
+  <ol>Test de la connexion SSH</ol>
+  <ol>Définition du chemin racine (Root Path) et du chemin de déploiement /</ol>
+
+  <p>Enfin,  nous avons activé l’upload automatique pour que chaque modification soit immédiatement prise en compte dans le serveur</p>
+</li>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p>Réalisé par Neal GIUSTIGNANO ET Sirine LAMARI.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </div>
 
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-3">
-  <p>Réalisé par Neal GIUSTIGNANO ET Sirine LAMARI.</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

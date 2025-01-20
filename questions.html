@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAE - Réponses aux Questions</title>
+    <title>Questions</title>
     <!-- CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -14,13 +14,31 @@
             background-color: #6c757d;
             color: white;
         }
+        .content-block {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .content-block:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        h2, h3 {
+            color: #343a40;
+            font-weight: bold;
+        }
+        p, ul {
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
 <!-- Barre de navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">SAE Rapport</a>
+        <a class="navbar-brand" href="#">Questions</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,21 +66,76 @@
 
 <!-- Contenu principal -->
 <div class="container mt-5">
-    <section id="questions">
-        <h2 class="text-center">Réponses aux Questions</h2>
-        <p>Voici les réponses aux questions posées au cours du projet :</p>
+    <section id="title" class="text-center mb-4">
+        <h2>Questions</h2>
+        <p class="text-muted">Réponses détaillées à vos interrogations</p>
+    </section>
+
+    <!-- Mini navigation -->
+    <nav class="sticky-top bg-white py-2 shadow-sm">
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="#virtualisation">1. Définition de la Virtualisation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#difference">2. Différence entre Émulateur, Simulateur et Virtualisation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#types">3. Types de Virtualisation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#sauvegarde">4. Sauvegarde de la Machine Virtuelle</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#choix">5. Explication des Choix Techniques</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Sections -->
+    <section id="virtualisation" class="content-block">
+        <h2>1. Définition de la Virtualisation</h2>
+        <p>La virtualisation, c'est une technologie qui permet de créer des versions virtuelles de ressources physiques, comme un ordinateur, un serveur, ou un système d’exploitation.</p>
+        <p>Elle utilise un logiciel appelé <strong>hyperviseur</strong>, qui permet de faire fonctionner plusieurs systèmes d’exploitation sur une seule machine physique. Cela permet d’avoir plusieurs "ordinateurs virtuels" indépendants, partageant les ressources de la machine hôte.</p>
+    </section>
+
+    <section id="difference" class="content-block">
+        <h2>2. Différence entre Émulateur, Simulateur et Virtualisation</h2>
         <ul>
-            <li><strong>Question 1 :</strong> Description de la première question et réponse.</li>
-            <p>Réponse : Détail de la réponse apportée.</p>
+            <li><strong>Émulateur :</strong> Reproduit un système totalement différent en traduisant tout, mais est plus lent.</li>
+            <li><strong>Simulateur :</strong> Imite un système pour des tests, sans exécuter le code réel.</li>
+            <li><strong>Virtualisation :</strong> Exécute un autre système d’exploitation directement sur le matériel, via un hyperviseur. C’est rapide et performant.</li>
+        </ul>
+    </section>
 
-            <li><strong>Question 2 :</strong> Description de la deuxième question et réponse.</li>
-            <p>Réponse : Détail de la réponse apportée.</p>
+    <section id="types" class="content-block">
+        <h2>3. Types de Virtualisation</h2>
+        <p>Les outils comme VirtualBox, VMware Workstation et Stratus utilisent la virtualisation complète, qui permet d’exécuter un système invité comme s’il était indépendant :</p>
+        <ul>
+            <li><strong>VirtualBox :</strong> Hyperviseur de type 2, fonctionnant au-dessus d’un système hôte.</li>
+            <li><strong>VMware Workstation :</strong> Similaire à VirtualBox, mais utilisé pour des solutions plus complexes.</li>
+            <li><strong>Stratus :</strong> Intègre souvent des solutions cloud et peut utiliser des hyperviseurs de type 1, fonctionnant directement sur le matériel.</li>
+        </ul>
+    </section>
 
-            <li><strong>Question 3 :</strong> Description de la troisième question et réponse.</li>
-            <p>Réponse : Détail de la réponse apportée.</p>
+    <section id="sauvegarde" class="content-block">
+        <h2>4. Sauvegarde de la Machine Virtuelle</h2>
+        <p>Les machines virtuelles sont stockées sous forme de fichiers sur le disque dur de l’hôte. Par exemple, avec VirtualBox :</p>
+        <ul>
+            <li><strong>Disque virtuel :</strong> Contient le système et les données.</li>
+            <li><strong>Snapshots :</strong> Copies d’état de la machine à un instant donné.</li>
+            <li><strong>Fichiers de configuration :</strong> Décrivent les paramètres de la machine virtuelle.</li>
+        </ul>
+    </section>
 
-            <li><strong>Question 4 :</strong> Description de la quatrième question et réponse.</li>
-            <p>Réponse : Détail de la réponse apportée.</p>
+    <section id="choix" class="content-block">
+        <h2>5. Explication des Choix Techniques</h2>
+        <p>Pour ce projet, voici les choix que nous avons faits :</p>
+        <ul>
+            <li><strong>Système invité :</strong> Ubuntu, pour sa légèreté, sa performance et sa gratuité.</li>
+            <li><strong>Ressources :</strong> 4 Go de RAM, 3 cœurs de processeur et 50 Go de disque dur.</li>
+            <li><strong>Mode réseau :</strong> Mode pont, pour une adresse IP locale accessible.</li>
+            <li><strong>Extensions Guest Additions :</strong> Activées pour le plein écran et le partage de fichiers.</li>
         </ul>
     </section>
 </div>
